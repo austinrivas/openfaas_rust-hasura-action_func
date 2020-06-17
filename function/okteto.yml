@@ -1,0 +1,32 @@
+# The name tells Okteto to replace the function named 'rust-hasura-action-hello' with the dev environment
+name: rust-hasura-action-hello       
+labels:
+  faas_function: rust-hasura-action-hello
+image: austinrivas/rust-hasura-action-okteto:stable
+command:
+  - bash
+workdir: /home/rust
+mountpath: /home/rust/function
+persistentVolume:
+  enabled: true
+volumes:
+  # This makes the rust cache persistent across development environments
+  - /home/rust/main/target
+  - /home/rust/function/target
+securityContext:
+  # the user and group that OpenFaaS functions run as
+  runAsUser:  12000
+  runAsGroup: 12000
+  fsGroup:    12000
+environment:
+  # overrides the one set by openfaas
+  - fprocess=cargo run --manifest-path ./main/Cargo.toml
+forward:
+  - 3000:3000
+resources:
+  requests:
+    memory: "20Mi"
+    cpu: "100m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
