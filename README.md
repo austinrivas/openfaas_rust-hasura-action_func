@@ -1,0 +1,1 @@
+# openfaas_rust-hasura-action_func
