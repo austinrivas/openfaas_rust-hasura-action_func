@@ -23,7 +23,7 @@ environment:
   - main_manifest=./main/Cargo.toml
   - fn_manifest=./function/Cargo.toml
   - test_watch=watchexec --exts rs,toml -- cargo test --manifest-path $fn_manifest
-  - fprocess=systemfd --no-pid -s http::3000 -- watchexec --exts rs,toml -r -- cargo run --manifest-path $main_manifest
+  - fprocess=watchexec --exts rs,toml -r -- cargo run --manifest-path $main_manifest
 forward:
   - 3000:3000
 resources:
